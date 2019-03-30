@@ -49,10 +49,10 @@ class ApiListener{
         let data = []
         let timestamp;
         let history;
-        for(var i = 0, c = Math.floor(numberBatch/50);i<c;i++){
+        for(var i = 0, c = Math.floor(numberBatch/50)+1;i<c;i++){
             history = await this.getThreadHistory(thread,50,timestamp);
             if(timestamp != undefined) history.pop();
-            data.push(history);
+            data.push(...history);
             timestamp = history[0].timestamp;
         }
         return data;

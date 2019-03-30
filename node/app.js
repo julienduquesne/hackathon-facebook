@@ -4,6 +4,7 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const ApiListener = require('./apiManager');
 const cookieSession = require('cookie-session');
+const axios = require('axios');
 
 let apiDict = {},
 
@@ -21,8 +22,15 @@ app.use(express.json());
 
 app.use(cookieSession({
     name:'session',
-    keys: ['key1','key2']
+    keys: ['key1','key2'],
 }));
+
+app.get('/start',(req,res)=>{
+    if(req.session.user){
+        req.session.user = undefined;
+    }
+    res.redirect('/');
+})
 
 app.get('/',async (req,res)=>{
     if(req.session.user){
@@ -43,20 +51,18 @@ app.get('/deconnect',(req,res)=>{
     }
 });
 
-let api;
-
-async function fetchHistory(){
+app.post('/stats',async (req,res)=>{
+    data = await apiDict[req.session.user].getWholeThreadHistory(req.body.threadId);
+    console.log(data);
     try{
-        data = await apiListener.getWholeThreadHistory('2085660434838292');
-        fs.writeFile('data.json',JSON.stringify(data),(err)=>{
-            if(err){
-                console.log('error while writing');
-            }
+        await axios.post('http://localhost:8081/raw_conversation',{
+            conversation: data
         });
     } catch(err) {
-        console.log('Error while fetching history',err);
+        console.log('Error while sending data',err);
     }
-}
+    res.redirect('/');
+});
 
 async function loginFunction(email,password){
     try{
@@ -81,3 +87,7 @@ app.post('/login',async (request,response)=>{
     response.redirect('/');
 });
 
+app.post('/output_python',(req,res)=>{
+    console.log('received');
+    console.log(req.body.data);
+})
