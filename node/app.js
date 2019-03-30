@@ -33,6 +33,16 @@ app.get('/',async (req,res)=>{
     }
 });
 
+app.get('/deconnect',(req,res)=>{
+    if(req.session.user){
+        req.session.user = undefined;
+        res.redirect('/');
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
 let api;
 
 async function fetchHistory(){
