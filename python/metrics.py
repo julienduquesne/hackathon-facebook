@@ -51,8 +51,5 @@ def user_leaderboard(message_list, key='received reactions'):
         pass
 
 
-
-
-
 def message_leaderboard(message_list):
     return sorted(message_list, key=lambda m: len(m.reactions), reverse=True)
