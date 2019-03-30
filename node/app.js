@@ -1,7 +1,8 @@
 const express = require('express');
 const http = require('http');
-const credentials = require('./login');
 const fs = require('fs');
+const bodyParser = require('body-parser');
+const ApiListener = require('./apiManager');
 
 let apiDict = {},
 
@@ -39,15 +40,20 @@ async function fetchHistory(){
 async function loginFunction(email,password){
     try{
         const apiListener = new ApiListener();
-        return await ApiListener.init(email,password);
+        return await apiListener.init(email,password);
     } catch (err) {
         console.log('Error while login',err);
         throw Error('Error while login');
     }
 }
 
-app.get('/login',async (res,req)=>{
-    apiDict[req.params.email] = await loginFunction(req.params.email,req.params.password);
-    res.send(200);
+app.post('/login',async (request,response)=>{
+    try{
+        apiDict[request.body.email] = await loginFunction(request.body.email,request.body.password);
+    } catch(err){
+        console.log(err)
+        return;
+    }
+    response.render('index',{'user':request.body.email});
 });
 
