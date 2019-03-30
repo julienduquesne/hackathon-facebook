@@ -98,61 +98,43 @@
         <form class="form-inline" method='POST' action='/login'>
           <div class="form-group mb-2">
             <label for="staticEmail2" class="sr-only">Email</label>
-            <input name='email' type="text" class="form-control" id="staticEmail2" placeholder="email@example.com">
+            <input name='email' value='ju.duquesne31@gmail.com' type="text" class="form-control" id="staticEmail2" placeholder="email@example.com">
           </div>
           <div class="form-group mx-sm-3 mb-2">
             <label for="inputPassword2" class="sr-only">Password</label>
-            <input name='password' type="password" class="form-control" id="inputPassword2" placeholder="Password">
+            <input name='password' value='***REMOVED***' type="password" class="form-control" id="inputPassword2" placeholder="Password">
           </div>
           <button type="submit" class="btn btn-primary mb-2">Confirm identity</button>
         </form>
       <%
     } %>
-
     <h3 class="mt-5">Thread List</h1>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">Image</th>
           <th scope="col">Thread Name</th>
           <th scope="col">Messages</th>
           <th scope="col">Choose</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td><img class="thumb-fb" src="img/me.jpeg"></td>
-          <td>Otto</td>
-          <td>1000</td>
-          <td>
-            <form action="#" method="post">
-              <input hidden type="text" name="" value="0">
-              <button type="submit" class="btn btn-dark btn-get-stats" thread-id="0">Get the stats !</button>
-            </form>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="thumb-fb" src="img/me.jpeg"></td>
-          <td>Thornton</td>
-          <td>100</td>
-          <td>
-            <form action="#" method="post">
-              <input hidden type="text" name="thread-id" value="0">
-              <button type="submit" class="btn btn-dark btn-get-stats" thread-id="1">Get the stats !</button>
-            </form>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="thumb-fb" src="img/me.jpeg"></td>
-          <td>the Bird</td>
-          <td>10</td>
-          <td>
-            <form action="#" method="post">
-              <input hidden type="text" name="" value="0">
-              <button type="submit" class="btn btn-dark btn-get-stats" thread-id="2">Get the stats !</button>
-            </form>
-          </td>
-        </tr>
+        
+        <% if(locals.listThread){
+          listThread.forEach(function (thread){
+            %>
+              <tr>
+                <td><%= thread.name %></td>
+                <td><%= thread.messageCount %></td>
+                <td>
+                  <form action="#" method="post">
+                    <input hidden type="text" value="<%= thread.threadID %>" name="threadId" value="0">
+                    <button type="submit" class="btn btn-dark btn-get-stats" thread-id="0">Get the stats !</button>
+                  </form>
+                </td>
+              </tr>
+            <%
+          });
+        }%>
       </tbody>
     </table>
 

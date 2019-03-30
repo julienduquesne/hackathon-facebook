@@ -40,7 +40,8 @@ async function fetchHistory(){
 async function loginFunction(email,password){
     try{
         const apiListener = new ApiListener();
-        return await apiListener.init(email,password);
+        await apiListener.init(email,password);
+        return apiListener
     } catch (err) {
         console.log('Error while login',err);
         throw Error('Error while login');
@@ -48,12 +49,14 @@ async function loginFunction(email,password){
 }
 
 app.post('/login',async (request,response)=>{
+    let threadList;
     try{
         apiDict[request.body.email] = await loginFunction(request.body.email,request.body.password);
+        threadList = await apiDict[request.body.email].getThreadList();
     } catch(err){
         console.log(err)
         return;
     }
-    response.render('index',{'user':request.body.email});
+    response.render('index',{'user':request.body.email,'listThread':threadList});
 });
 
