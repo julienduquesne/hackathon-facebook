@@ -2,7 +2,7 @@ const login = require('facebook-chat-api');
 
 class ApiListener{
     async init(email,password){
-        await new Promise((resolve,reject)=>{
+        return new Promise((resolve,reject)=>{
             login({email: email, password: password},(err,api)=>{
             if(err){
                 reject();
@@ -56,6 +56,18 @@ class ApiListener{
             timestamp = history[0].timestamp;
         }
         return data;
+    }
+
+    getThreadList(){
+        return new Promise((resolve,reject)=>{
+            this.api.getThreadList(10,null,[],(err,list) =>{
+                if(err){
+                    console.log('Error while fetch thread list',err);
+                    reject();
+                }
+                resolve(list);
+            })
+        });
     }
 }
 
