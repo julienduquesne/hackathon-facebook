@@ -19,7 +19,7 @@ class TestHTTPServer_RequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         if self.path == PATH_upload_json:
             content_len = int(self.headers.getheader('content-length', 0))
-            input_conv = self.rfile.read(content_len).decoder('utf-8')
+            input_conv = self.rfile.read(content_len).decode('utf-8')["conversation"]
             print(type(input_conv))
             # call python computations
             output_python = output_metrics(input_conv)
