@@ -12,6 +12,11 @@ store_path = '/raw_conversation'
 
 # HTTPRequestHandler class
 class TestHTTPServer_RequestHandler(BaseHTTPRequestHandler):
+    def _set_response(self,output):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/json')
+        self.end_headers()
+        self.wfile.write(output.encode('utf-8'))
 
     def do_GET(self):
         return
@@ -25,10 +30,8 @@ class TestHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             # call python computations
             output_python = output_metrics(input_conv)
             print(output_python)
-            r = requests.post(url_for_node, data={'data':output_python})
-
-            self.send_response(200)
-
+            self._set_response(output_python)
+            
 
 def output_metrics(input_conv):
     message_list = parse_conversation(input_conv)
