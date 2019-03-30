@@ -51,8 +51,15 @@ def user_leaderboard(message_list, key='received reactions'):
         pass
 
 
-
-
-
 def message_leaderboard(message_list):
     return sorted(message_list, key=lambda m: len(m.reactions), reverse=True)
+
+
+def user_index(message_list):
+    user_dict, cpt = {}, 0
+    for m in message_list():
+        user = m.author
+        if user not in user_dict:
+            user_dict[user] = cpt
+            cpt += 1
+    return user_dict
