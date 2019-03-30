@@ -2,13 +2,12 @@ import json
 from message import Message
 
 
-def parse_conversation(path):
-    with open(path, encoding="utf8") as json_file:
-        conversation = json.load(json_file)
-        messages_list = []
-        for json_message in conversation:
-            if json_message["type"] == 'message':
-                messages_list.append(parse_message(json_message))
+def parse_conversation(conv):
+    conversation = json.loads(conv)
+    messages_list = []
+    for json_message in conversation:
+        if json_message["type"] == 'message':
+            messages_list.append(parse_message(json_message))
     return messages_list
 
 
