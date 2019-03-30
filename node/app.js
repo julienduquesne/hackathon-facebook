@@ -6,16 +6,19 @@ const fs = require('fs');
 let apiDict = {},
 
 app = express();
+
 server = http.createServer(app);
 server.listen(3000,()=>{
     console.log('Listening');
 });
 
-app.get('/',(req,res)=>{
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/static/'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
 
-    res.status(200).send({
-        msg:'Everything is working fine'
-    })
+app.get('/',(req,res)=>{
+    res.render('index');
 });
 
 let api;
@@ -43,9 +46,8 @@ async function loginFunction(email,password){
     }
 }
 
-loginFunction();
-
-app.get('localhost:3000/login',async (res,req)=>{
+app.get('/login',async (res,req)=>{
     apiDict[req.params.email] = await loginFunction(req.params.email,req.params.password);
     res.send(200);
 });
+
