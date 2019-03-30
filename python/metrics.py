@@ -81,7 +81,10 @@ def sym_adjacency_dict(message_list):
                 user_reactions[reaction_giver] = 1
             # user receives reaction from reaction_giver
             if reaction_giver in user_dict:
-                user_dict[reaction_giver][user] += 1
+                if user in user_dict[reaction_giver]:
+                    user_dict[reaction_giver][user] += 1
+                else:
+                    user_dict[reaction_giver][user] = 1
             else:
                 user_dict[reaction_giver] = {user: 1}
     return user_dict
