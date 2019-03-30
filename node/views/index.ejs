@@ -103,8 +103,8 @@
                 <td><%= thread.name %></td>
                 <td><%= thread.messageCount %></td>
                 <td>
-                  <form action="#" method="post">
-                    <input hidden type="text" value="<%= thread.threadID %>" name="threadId" value="0">
+                  <form action="/stats" method="POST">
+                    <input hidden type="text" value="<%= thread.threadID %>" name="threadId">
                     <button type="submit" class="btn btn-dark btn-get-stats" thread-id="0">Get the stats !</button>
                   </form>
                 </td>
