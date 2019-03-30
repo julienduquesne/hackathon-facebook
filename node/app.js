@@ -3,6 +3,7 @@ const http = require('http');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const ApiListener = require('./apiManager');
+const cookieSession = require('cookie-session');
 
 let apiDict = {},
 
@@ -18,8 +19,18 @@ app.use(express.static(__dirname + '/static/'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get('/',(req,res)=>{
-    res.render('index');
+app.use(cookieSession({
+    name:'session',
+    keys: ['key1','key2']
+}));
+
+app.get('/',async (req,res)=>{
+    if(req.session.user){
+        threadList = await apiDict[req.session.user].getThreadList();
+        res.render('index',{'user':req.session.user,'listThread':threadList});
+    } else{
+        res.render('index');
+    }
 });
 
 let api;
@@ -52,11 +63,11 @@ app.post('/login',async (request,response)=>{
     let threadList;
     try{
         apiDict[request.body.email] = await loginFunction(request.body.email,request.body.password);
-        threadList = await apiDict[request.body.email].getThreadList();
+        request.session.user = request.body.email;
     } catch(err){
         console.log(err)
         return;
     }
-    response.render('index',{'user':request.body.email,'listThread':threadList});
+    response.redirect('/');
 });
 
