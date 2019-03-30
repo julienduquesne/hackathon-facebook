@@ -7,4 +7,4 @@ COPY node .
 WORKDIR node
 
 RUN npm install
-RUN npm instll -g nodemon
+RUN npm install -g nodemon
