@@ -10,8 +10,8 @@
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
     <!-- <link href="{% static 'css/blog.css' %}" rel="stylesheet"> -->
     <!-- <link href="{% static 'css/dist.min.css' %}" rel="stylesheet"> -->
-    <link href="css/dist.min.css" type='css' rel="stylesheet">
-    <link href="css/blog.css" type='css' rel="stylesheet">
+    <link href="css/dist.min.css" rel="stylesheet">
+    <link href="css/blog.css" rel="stylesheet">
   </head>
 
   <body>
@@ -89,19 +89,25 @@
           </div>
         </div>
     </div> -->
-
-    <h3 class="mt-5">Login</h1>
-    <form class="form-inline">
-      <div class="form-group mb-2">
-        <label for="staticEmail2" class="sr-only">Email</label>
-        <input type="text" class="form-control" id="staticEmail2" placeholder="email@example.com">
-      </div>
-      <div class="form-group mx-sm-3 mb-2">
-        <label for="inputPassword2" class="sr-only">Password</label>
-        <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
-      </div>
-      <button type="submit" class="btn btn-primary mb-2">Confirm identity</button>
-    </form>
+    <% if (locals.user) {%>
+      <p>Welcome!</p>
+    <%}
+    else{
+      %>
+      <h3 class="mt-5">Login</h1>
+        <form class="form-inline" method='POST' action='/login'>
+          <div class="form-group mb-2">
+            <label for="staticEmail2" class="sr-only">Email</label>
+            <input name='email' type="text" class="form-control" id="staticEmail2" placeholder="email@example.com">
+          </div>
+          <div class="form-group mx-sm-3 mb-2">
+            <label for="inputPassword2" class="sr-only">Password</label>
+            <input name='password' type="password" class="form-control" id="inputPassword2" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary mb-2">Confirm identity</button>
+        </form>
+      <%
+    } %>
 
     <h3 class="mt-5">Thread List</h1>
     <table class="table table-striped">
