@@ -90,7 +90,7 @@
         </div>
     </div> -->
 
-    <h3 class="mt-5">Login</h1>
+    <h3 class="mt-5">Login</h3>
     <form class="form-inline">
       <div class="form-group mb-2">
         <label for="staticEmail2" class="sr-only">Email</label>
@@ -103,7 +103,7 @@
       <button type="submit" class="btn btn-primary mb-2">Confirm identity</button>
     </form>
 
-    <h3 class="mt-5">Thread List</h1>
+    <h3 class="mt-5">Thread List</h3>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -150,7 +150,10 @@
       </tbody>
     </table>
 
-    <h3 class="mt-5">Thread Leaderboard</h1>
+    <h3 class="mt-5">Bar Chart</h3>
+    <canvas id="barChart" width="100%" height="40"></canvas>
+
+    <h3 class="mt-5">Thread Leaderboard</h3>
 
     <form class="form-inline my-3">
       <div class="form-check mx-2">
@@ -209,6 +212,35 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="js/main.js"></script>
+    <script type="text/javascript">
+      var ctx = document.getElementById('barChart').getContext('2d');
+
+      console.log(ctx)
+
+      var myBarChart = new Chart(ctx, {
+          type: 'horizontalBar',
+          data: {
+            labels: ['A', 'B', 'C', 'D', 'E'],
+            datasets: [{
+                label: 'Messages',
+                backgroundColor: 'rgb(52, 58, 64)',
+                borderColor: 'rgb(52, 58, 64)',
+                data: [2, 10, 6, 12, 4]
+            }]
+          },
+          options: {
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+          }
+      });
+    </script>
   </body>
 </html>
