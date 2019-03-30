@@ -3,9 +3,7 @@ version: '3'
 services:
 
   node:
-    build:
-      context: .
-      dockerfile: dockerfiles/node/Dockerfile
+    build: 'node'
     command: npm start
     volumes:
         - .:/code
