@@ -36,6 +36,17 @@ def user_leaderboard(message_list, key='received reactions'):
         user_react_list = [(k, v) for k, v in user_dict.items()]
         user_react_list.sort(key=lambda t: t[1], reverse=True)
         return user_react_list
+    elif key == 'sent messages':
+        user_dict = {}
+        for m in message_list:
+            user = m.author
+            if user in user_dict:
+                user_dict[user] += 1
+            else:
+                user_dict[user] = 1
+        user_react_list = [(k, v) for k, v in user_dict.items()]
+        user_react_list.sort(key=lambda t: t[1], reverse=True)
+        return user_react_list
     else:
         pass
 
