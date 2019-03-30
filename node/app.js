@@ -62,7 +62,7 @@ app.post('/stats',async (req,res)=>{
     } catch(err) {
         console.log('Error while sending data',err);
     }
-    res.render('threadStats.ejs')
+    res.render('threadStats.ejs',{'data':response});
 });
 
 async function loginFunction(email,password){
