@@ -62,4 +62,37 @@ def user_index(message_list):
         if user not in user_dict:
             user_dict[user] = cpt
             cpt += 1
+    return user_dict, cpt
+
+
+def sym_adjacency_dict(message_list):
+    user_dict = {}
+    for m in message_list:
+        user = m.author
+        if user not in user_dict:
+            user_dict[user] = {}
+        user_reactions = user_dict[user]
+        for r in m.reactions:
+            reaction_giver = r["userID"]
+            # reaction_giver reacts to user
+            if reaction_giver in user_reactions:
+                user_reactions[reaction_giver] += 1
+            else:
+                user_reactions[reaction_giver] = 1
+            # user receives reaction from reaction_giver
+            if reaction_giver in user_dict:
+                user_dict[reaction_giver][user] += 1
+            else:
+                user_dict[reaction_giver] = {user: 1}
     return user_dict
+
+
+def filter_sym_dict(d, nb=3):
+    user_best_friends = {}
+    for user in d:
+        l = [(k, v) for k, v in d[user].items()]
+        l.sort(key=lambda t: t[1], reverse=True)
+        user_best_friends[user] = l[:min(nb, len(l))]
+    return user_best_friends
+
+

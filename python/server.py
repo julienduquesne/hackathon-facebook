@@ -4,6 +4,7 @@ import os
 import requests
 from json_parser import *
 from metrics import *
+import json
 
 url_for_node = "http://localhost:3000/output_python"
 
@@ -38,6 +39,16 @@ def output_metrics(input_conv):
     output = {}
     for feature in wanted_features:
         output[feature] = user_leaderboard(message_list, key=feature)
+
+    nodes = [{'id': user, 'value': output['sent messages']['user'], 'label': 'fill name'}
+             for user in output['sent messages']]
+    filtered_adjacency_dic = filter_sym_dict(sym_adjacency_dict(message_list))
+    edges = []
+    for user, friends in filtered_adjacency_dic.items():
+        for i in range(len(friends)):
+            edges.append({'from': user, 'to': friends[i][0],
+                          'value': friends[i][1]})
+    output["graph_data"] = {'nodes': nodes, 'edges': edges}
     return json.dumps(output)
 
 
