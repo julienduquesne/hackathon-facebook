@@ -6,18 +6,20 @@ from json_parser import *
 from metrics import *
 
 url_for_node = "http://localhost:8000/output_python"
-
+store_path = os.path.join(curdir, 'raw_conversation')
 wanted_features = ['received reactions', 'given reactions', 'sent messages']
+
+
 # HTTPRequestHandler class
 class TestHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
-    store_path = os.path.join(curdir, 'raw_conversation')
+
 
     def do_GET(self):
         return
 
     def do_POST(self):
-        if self.path == PATH_upload_json:
+        if self.path == store_path:
             content_len = int(self.headers.getheader('content-length', 0))
             input_conv = self.rfile.read(content_len).decode('utf-8')["conversation"]
             print(type(input_conv))
