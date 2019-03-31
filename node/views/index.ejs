@@ -59,7 +59,8 @@
         <tr>
           <th scope="col">Thread Name</th>
           <th scope="col">Messages</th>
-          <th scope="col">Choose</th>
+          <th scope="col">Get users stats</th>
+          <th scope='col'>Get messages stats</th>
         </tr>
       </thead>
       <tbody>
@@ -72,8 +73,14 @@
                 <td>
                   <form action="/stats-users" method="POST">
                     <input hidden type="text" value="<%= thread.threadID %>" name="threadId">
-                    <button type="submit" class="btn btn-blue btn-get-stats" thread-id="0">Get the stats !</button>
+                    <button type="submit" class="btn btn-blue btn-get-stats" thread-id="0">Get the users stats</button>
                   </form>
+                </td>
+                <td>
+                    <form action="/stats-messages" method="POST">
+                      <input hidden type="text" value="<%= thread.threadID %>" name="threadId">
+                      <button type="submit" class="btn btn-blue btn-get-stats" thread-id="0">Get the messages stats</button>
+                    </form>
                 </td>
               </tr>
             <%

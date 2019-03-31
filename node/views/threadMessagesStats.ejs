@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Messenger Stats</title>
+
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <!-- <link href="{% static 'css/blog.css' %}" rel="stylesheet"> -->
+    <!-- <link href="{% static 'css/dist.min.css' %}" rel="stylesheet"> -->
+    <link href="css/dist.min.css" rel="stylesheet">
+    <link href="css/blog.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container">
+            <header class="blog-header py-3">
+            <div class="row flex-nowrap justify-content-center align-items-center">
+                <div class="col-4 text-center">
+                <a class="blog-header-logo text-dark" href="#">
+                    <h1>
+                            Messenger Stats
+                    </h1>
+                </a>
+                </div>
+            </div>
+            </header>
+    
+    <% if(images){ %>
+        <h3 class="mt-5">Best images</h3>
+        <canvas id="barChartImages" width="100%" height="20"></canvas>
+    <%
+    }
+    %>
+
+    <h3 class="mt-5">Best messages by number of reactions</h3>
+    <canvas id="barChartAllMessages" width="100%" height="20"></canvas>
+
+    <h3 class="mt-5">Most popular sender</h3>
+    <canvas id="barChartReactionsReceived" width="100%" height="20"></canvas>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="js/sigma.min.js"></script>
+    <% if(images){ %>
+    <script type="text/javascript">
+    var ctx = document.getElementById('barChartImages').getContext('2d');
+
+    var myBarChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+          labels: [
+          <% images.slice(0,10).forEach(message => { %>'<%- message["author"] %>',<% }) %>
+          ],
+          datasets: [{
+              label: 'Messages',
+              backgroundColor: '#3b5998',
+              borderColor: '#3b5998',
+              data: [
+              <% images.slice(0,10).forEach(message => { %>'<%- message["reactions"].length %>',<% }) %>
+              ]
+          }]
+        },
+        options: {
+          scales: {
+              xAxes: [{
+                  stacked: true
+              }],
+              yAxes: [{
+                  stacked: true
+              }]
+          }
+        }
+    });
+  </script> 
+  <% }; %>
+
+  <script type="text/javascript">
+      var ctx = document.getElementById('barChartAllMessages').getContext('2d');
+  
+      var myBarChart = new Chart(ctx, {
+          type: 'horizontalBar',
+          data: {
+              labels: [
+              <% all.slice(0,10).forEach(message => { %>'<%- message["author"] %>',<% }) %>
+              ],
+              datasets: [{
+                  label: 'Reactions',
+                  backgroundColor: '#3b5998',
+                  borderColor: '#3b5998',
+                  data: [
+                  <% all.slice(0,10).forEach(message => { %>'<%- message["reactions"].length %>',<% }) %>
+                  ]
+              }]
+          },
+          options: {
+              scales: {
+                  xAxes: [{
+                      stacked: true
+                  }],
+                  yAxes: [{
+                      stacked: true
+                  }]
+              }
+          }
+      });
+      </script>
+    }
+    <script type="text/javascript">
+    var ctx = document.getElementById('barChartReactionsReceived').getContext('2d');
+
+    var myBarChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: [
+            ],
+            datasets: [{
+                label: 'Reactions',
+                backgroundColor: '#3b5998',
+                borderColor: '#3b5998',
+                data: [
+                ]
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+        }
+    });
+    </script>
+
+  </body>
