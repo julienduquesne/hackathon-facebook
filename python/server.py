@@ -43,6 +43,7 @@ class TestHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 def output_metrics(input_conv, metric_type='users'):
     message_list = parse_conversation(input_conv)
     output = {}
+<<<<<<< HEAD
     if metric_type == 'users':
         # users metrics
         for feature in wanted_features:
@@ -74,12 +75,13 @@ def output_metrics(input_conv, metric_type='users'):
                                         'timestamp': m['timestamp'], 'url':image['url']})
                     cpt += 1
         output["best_images"] = best_images
+        output["words_cloud_input"] = get_words_for_cloud(message_list)
     else:
         print("Wrong flag !")
     return json.dumps(output)
 
 
-def scale_node_values(list_nodes, min_scale=5, max_scale=150):
+def scale_node_values(list_nodes, min_scale=5, max_scale=50):
     nodes = list_nodes
     values = np.array([node['value'] for node in nodes])
     min_v = min(values)
