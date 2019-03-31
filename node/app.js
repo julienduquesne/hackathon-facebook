@@ -51,7 +51,7 @@ app.get('/deconnect',(req,res)=>{
     }
 });
 
-app.post('/stats',async (req,res)=>{
+app.post('/stats-users',async (req,res)=>{
     data = await apiDict[req.session.user].getWholeThreadHistory(req.body.threadId);
     let response;
     try{
@@ -114,6 +114,20 @@ app.post('/stats',async (req,res)=>{
 
     res.render('threadStats.ejs',{'graph_data':data['graph_data'],'sent_messages':data['sent messages'],'given_reactions':data['given reactions'],'received_reactions':data['received reactions']});
 });
+
+app.get('stats-messages',async (req,res)=>{
+    data = await apiDict[req.session.user].getWholeThreadHistory(req.body.threadId);
+    try{
+        response = await axios.post('http://python:8081/raw_conversation',{
+            'conversation': data
+        });
+    } catch(err) {
+        console.log('Error while sending data',err);
+    }
+    data = response.data
+
+});
+
 
 async function loginFunction(email,password){
     try{

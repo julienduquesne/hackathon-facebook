@@ -2,6 +2,7 @@ const login = require('facebook-chat-api');
 
 class ApiListener{
     async init(email,password){
+        this.tradeHistory = {};
         return new Promise((resolve,reject)=>{
             login({email: email, password: password},(err,api)=>{
             if(err){
@@ -52,6 +53,9 @@ class ApiListener{
 
     async getWholeThreadHistory(thread){
         let info;
+        if(this.tradeHistory[thread]){
+            return this.tradeHistory[thread]
+        }
         try{
             info = await this.getThreadInfo(thread);
         } catch(err) {
@@ -67,6 +71,7 @@ class ApiListener{
             data.push(...history);
             timestamp = history[0].timestamp;
         }
+        this.tradeHistory[thread] = data;
         return data;
     }
 

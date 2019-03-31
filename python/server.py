@@ -33,7 +33,6 @@ class TestHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             print(type(input_conv))
             # call python computations
             output_python = output_metrics(input_conv)
-            print(output_python)
             self._set_response(output_python)
 
 
