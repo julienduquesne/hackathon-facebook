@@ -40,7 +40,7 @@ def output_metrics(input_conv):
     for feature in wanted_features:
         output[feature] = user_leaderboard(message_list, key=feature)
 
-    nodes = [{'id': user, 'value': value, 'label': 'fill name'}
+    nodes = [{'id': user, 'value': value, 'label': 'fill name', 'scaling.label': True}
              for (user, value) in output['sent messages']]
     filtered_adjacency_dic = filter_sym_dict(sym_adjacency_dict(message_list))
     edges = []
