@@ -7,7 +7,7 @@ from metrics import *
 import json
 import numpy as np
 
-url_for_node = "http://localhost:3000/output_python"
+url_for_node = "http://node:3000/output_python"
 
 wanted_features = ['received reactions', 'given reactions', 'sent messages']
 messages_flags = ['all', 'images']
@@ -34,7 +34,7 @@ class TestHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             output_python = output_metrics(input_conv)
             print(output_python)
             self._set_response(output_python)
-            
+
 
 def output_metrics(input_conv):
     message_list = parse_conversation(input_conv)
@@ -77,7 +77,7 @@ def run():
 
     # Server settings
     # Choose port 8080, for port 80, which is normally used for a http server, you need root access
-    server_address = ('', 8081)
+    server_address = ('0.0.0.0', 8081)
     httpd = HTTPServer(server_address, TestHTTPServer_RequestHandler)
     print('running server...')
     try:

@@ -72,7 +72,7 @@ class ApiListener{
 
     getThreadList(){
         return new Promise((resolve,reject)=>{
-            this.api.getThreadList(10,null,[],(err,list) =>{
+            this.api.getThreadList(20,null,[],(err,list) =>{
                 if(err){
                     console.log('Error while fetch thread list',err);
                     reject();
