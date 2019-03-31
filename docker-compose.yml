@@ -3,9 +3,20 @@ version: '3'
 services:
 
   node:
-    build: 'node'
+    build: './node'
+    working_dir: /var/app
     command: npm start
     volumes:
-        - .:/code
+        - ./node:/var/app
+        - /var/app/node_modules
     ports:
         - "3000:3000"
+
+  python:
+    build: './python'
+    working_dir: /var/app
+    command: python server.py
+    volumes:
+      - ./python:/var/app
+    ports:
+      - "8081:8081"
