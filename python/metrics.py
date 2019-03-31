@@ -64,9 +64,26 @@ def filter_image(message_list):
         res.append(m)
     return res
 
-def get_words_for_cloud(message_list):
+def get_words_for_cloud(message_list, n_words=30):
     msgs = [m.body for m in message_list]
     counts_list = [count_words(msg) for msg in msgs]
+    dic_words = {}
+    for dic in counts_list:
+        for word, occ in dic.items():
+            if word in dic_words:
+                dic_words[word] += 1
+            else:
+                dic_words[word] = 1
+    values = dic_words.values()
+    min_c = min(values)
+    max_c = max(values)
+    scale = max_c - min_c
+    final_output = []
+    for key, value in dic_words.items():
+        final_output.append({'text': word, 'size': (dic_words[key] - min_c) * (90./scale) + 10})
+    final_output.sort(key= lambda t: t['size'], reverse=True)
+    n_words = min(30, len(final_output))
+    return final_output[:n_words]
 
 
 def count_words(msg_txt):
