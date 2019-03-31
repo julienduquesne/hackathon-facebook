@@ -52,7 +52,9 @@ def user_leaderboard(message_list, key='received reactions'):
 
 
 def message_leaderboard(message_list):
-    return sorted(message_list, key=lambda m: len(m.reactions), reverse=True)
+    l = sorted(message_list, key=lambda m: len(m.reactions), reverse=True)
+    res = [{"author": m.author, "reactions":m.reactions, "body": m.body, "timestamp": m.timestamp} for m in l]
+    return res
 
 
 def user_index(message_list):
@@ -81,7 +83,10 @@ def sym_adjacency_dict(message_list):
                 user_reactions[reaction_giver] = 1
             # user receives reaction from reaction_giver
             if reaction_giver in user_dict:
-                user_dict[reaction_giver][user] += 1
+                if user in user_dict[reaction_giver]:
+                    user_dict[reaction_giver][user] += 1
+                else:
+                    user_dict[reaction_giver][user] = 1
             else:
                 user_dict[reaction_giver] = {user: 1}
     return user_dict
