@@ -37,13 +37,14 @@ class TestHTTPServer_RequestHandler(BaseHTTPRequestHandler):
         elif self.path == store_path_to_messages:
             # call python computations
             output_python = output_metrics(input_conv, metric_type='messages')
+        else:
+            print("ERROR : Wrong Path !")
         self._set_response(output_python)
 
 
 def output_metrics(input_conv, metric_type='users'):
     message_list = parse_conversation(input_conv)
     output = {}
-<<<<<<< HEAD
     if metric_type == 'users':
         # users metrics
         for feature in wanted_features:
