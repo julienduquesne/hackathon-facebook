@@ -50,11 +50,11 @@ def output_metrics(input_conv):
     cpt, best_images = 0, []
 
     for m in best_attachements_mess:
-        if cpt < nb_images
-        for image in m["attachements"]:
-            best_images.append({'ID':image['ID'], 'author':m['author'], 'reactions': m['reactions'],
-                                'timestamp': m['timestamp'], 'url':image['url']})
-            cpt += 1
+        if cpt < nb_images:
+            for image in m["attachements"]:
+                best_images.append({'ID':image['ID'], 'author':m['author'], 'reactions': m['reactions'],
+                                    'timestamp': m['timestamp'], 'url':image['url']})
+                cpt += 1
     output["best_images"] = best_images
 
     nodes = [{'id': user, 'value': value, 'label': 'fill name', 'scaling.label': True}
