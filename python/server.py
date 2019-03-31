@@ -49,7 +49,7 @@ def output_metrics(input_conv, metric_type='users'):
         nodes = [{'id': user, 'value': value, 'label': 'fill name', 'scaling.label': True}
                  for (user, value) in output['sent messages']]
         nodes = scale_node_values(nodes)
-        filtered_adjacency_dic = filter_sym_dict(sym_adjacency_dict(message_list, nb=2))
+        filtered_adjacency_dic = filter_sym_dict(sym_adjacency_dict(message_list), nb=2)
         edges = []
         for user, friends in filtered_adjacency_dic.items():
             for i in range(len(friends)):
