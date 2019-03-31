@@ -100,16 +100,6 @@ def message_leaderboard(message_list, flag='all'):
         return res
 
 
-def user_index(message_list):
-    user_dict, cpt = {}, 0
-    for m in message_list():message_list
-        user = m.author
-        if user not in user_dict:
-            user_dict[user] = cpt
-            cpt += 1
-    return user_dict, cpt
-
-
 def sym_adjacency_dict(message_list):
     user_dict = {}
     for m in message_list:
