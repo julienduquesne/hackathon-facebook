@@ -59,6 +59,30 @@ def filter_image(message_list):
             res.append(m)
     return res
 
+def get_words_for_cloud(message_list):
+    msgs = [m.body for m in message_list]
+    counts_list = [count_words(msg) for msg in msgs]
+
+
+def count_words(msg_txt):
+    words = msg_txt.split()
+    good_words = [correct_word(word) for word in words]
+    counts = {}
+    for word in good_words:
+        if word in counts:
+            counts[word] += 1
+        else:
+            counts[word] = 1
+    return counts
+
+
+def correct_word(word):
+    punctuation = ['.', ',', '!', '?', '(', ')', ':', ';']
+    if word[0] in punctuation:
+        word.pop(0)
+    if word[-1] in punctuation:
+        word.pop()
+    return word
 
 def message_leaderboard(message_list, flag='all'):
     if flag=='all':
@@ -73,7 +97,7 @@ def message_leaderboard(message_list, flag='all'):
 
 def user_index(message_list):
     user_dict, cpt = {}, 0
-    for m in message_list():
+    for m in message_list():message_list
         user = m.author
         if user not in user_dict:
             user_dict[user] = cpt
