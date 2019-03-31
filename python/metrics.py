@@ -1,8 +1,3 @@
-from message import Message
-import json
-from json_parser import parse_conversation
-
-
 def message_by_users(message_list):
     user_dict = {}
     for m in message_list:
@@ -64,6 +59,7 @@ def filter_image(message_list):
         res.append(m)
     return res
 
+
 def get_words_for_cloud(message_list, n_words=30):
     msgs = [m.body for m in message_list]
     counts_list = [count_words(msg) for msg in msgs]
@@ -105,6 +101,7 @@ def correct_word(word):
     if word[-1] in punctuation:
         word[:-1]
     return word.lower()
+
 
 def message_leaderboard(message_list, flag='all'):
     if flag=='all':
