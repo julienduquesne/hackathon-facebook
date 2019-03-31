@@ -62,7 +62,7 @@ def output_metrics(input_conv, metric_type='users'):
         for flag in messages_flags:
             output[flag] = message_leaderboard(message_list, flag=flag)
         # top images
-        best_images_mess = output['images'][:min(3, len(l))]
+        best_images_mess = output['images'][:min(3, len(output['images']))]
         cpt, best_images = 0, []
         for m in best_images_mess:
             if cpt < nb_images:
