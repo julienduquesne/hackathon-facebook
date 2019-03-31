@@ -48,6 +48,7 @@ def output_metrics(input_conv):
         output[flag] = l
     best_attachements_mess = l[:min(3, len(l))]
     cpt, best_images = 0, []
+
     for m in best_attachements_mess:
         if cpt < nb_images
         for image in m["attachements"]:
