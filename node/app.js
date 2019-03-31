@@ -55,7 +55,7 @@ app.post('/stats-users',async (req,res)=>{
     data = await apiDict[req.session.user].getWholeThreadHistory(req.body.threadId);
     let response;
     try{
-        response = await axios.post('http://python:8081/raw_conversation',{
+        response = await axios.post('http://python:8081/users_metrics',{
             'conversation': data
         });
     } catch(err) {
@@ -115,17 +115,18 @@ app.post('/stats-users',async (req,res)=>{
     res.render('threadStats.ejs',{'graph_data':data['graph_data'],'sent_messages':data['sent messages'],'given_reactions':data['given reactions'],'received_reactions':data['received reactions']});
 });
 
-app.get('stats-messages',async (req,res)=>{
+app.post('/stats-messages',async (req,res)=>{
     data = await apiDict[req.session.user].getWholeThreadHistory(req.body.threadId);
     try{
-        response = await axios.post('http://python:8081/raw_conversation',{
+        response = await axios.post('http://python:8081/messages_metrics',{
             'conversation': data
         });
     } catch(err) {
         console.log('Error while sending data',err);
     }
     data = response.data
-
+    console.log(data);
+    res.render('threadMessagesStats.ejs',{'data':data,'all':data['all'],'images':data['images']});
 });
 
 
