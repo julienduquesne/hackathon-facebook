@@ -103,7 +103,6 @@ def correct_word(word):
     return word.lower()
 
 
-
 def message_leaderboard(message_list, flag='all'):
     if flag=='all':
         l = sorted(message_list, key=lambda m: len(m.reactions), reverse=True)

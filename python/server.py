@@ -59,12 +59,11 @@ def output_metrics(input_conv, metric_type='users'):
     elif metric_type == 'messages':
         # message metrics
         for flag in messages_flags:
-            l = message_leaderboard(message_list, flag=flag)
-            output[flag] = l
+            output[flag] = message_leaderboard(message_list, flag=flag)
         # top images
-        best_attachements_mess = l[:min(3, len(l))]
+        best_images_mess = output['images'][:min(3, len(l))]
         cpt, best_images = 0, []
-        for m in best_attachements_mess:
+        for m in best_images_mess:
             if cpt < nb_images:
                 for image in m["attachements"]:
                     best_images.append({'ID':image['ID'], 'author':m['author'], 'reactions': m['reactions'],
