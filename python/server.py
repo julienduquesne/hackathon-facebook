@@ -68,7 +68,7 @@ def output_metrics(input_conv, metric_type='users'):
             if cpt < nb_images:
                 for image in m["attachements"]:
                     best_images.append({'ID':image['ID'], 'author':m['author'], 'reactions': m['reactions'],
-                                        'timestamp': m['timestamp'], 'url':image['url']})
+                                        'body': m['body'], 'timestamp': m['timestamp'], 'url':image['url']})
                     cpt += 1
         output["best_images"] = best_images
         output["words_cloud_input"] = get_words_for_cloud(message_list)
