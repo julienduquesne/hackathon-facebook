@@ -55,7 +55,7 @@ app.post('/stats',async (req,res)=>{
     data = await apiDict[req.session.user].getWholeThreadHistory(req.body.threadId);
     let response;
     try{
-        response = await axios.post('http://localhost:8081/raw_conversation',{
+        response = await axios.post('http://python:8081/raw_conversation',{
             'conversation': data
         });
     } catch(err) {
