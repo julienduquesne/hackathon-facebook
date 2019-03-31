@@ -5,6 +5,7 @@ import requests
 from json_parser import *
 from metrics import *
 import json
+import numpy as np
 
 url_for_node = "http://localhost:3000/output_python"
 
@@ -42,6 +43,7 @@ def output_metrics(input_conv):
 
     nodes = [{'id': user, 'value': value, 'label': 'fill name', 'scaling.label': True}
              for (user, value) in output['sent messages']]
+    nodes = scale_node_values(nodes)
     filtered_adjacency_dic = filter_sym_dict(sym_adjacency_dict(message_list))
     edges = []
     for user, friends in filtered_adjacency_dic.items():
@@ -52,6 +54,18 @@ def output_metrics(input_conv):
     output["graph_data"] = {'nodes': nodes, 'edges': edges}
     return json.dumps(output)
 
+def scale_node_values(list_nodes, min=5, max=150):
+    nodes = list_nodes
+    values = np.array([node['value'] for node in nodes])
+    min_v = min(values)
+    max_v = max(values)
+    scale = max_v - min_v
+    scaled_values = values - min_v
+    scaled_values = scaled_values / scale
+    scaled_values = max * scaled_values + min
+    for i, node in enumerate(nodes):
+        node['value'] = scaled_values[i]
+    return list_nodes
 
 def run():
     print('starting server...')
