@@ -38,6 +38,18 @@ class ApiListener{
         })
     }
 
+    getUserInfo(id){
+        return new Promise((resolve,reject)=>{
+            this.api.getUserInfo(id,(err,ret)=>{
+                if(err){
+                    console.log('Error while getting name info',err);
+                    reject();
+                }
+                resolve(ret);
+            });
+        });
+    }
+
     async getWholeThreadHistory(thread){
         let info;
         try{

@@ -58,11 +58,61 @@ app.post('/stats',async (req,res)=>{
         response = await axios.post('http://localhost:8081/raw_conversation',{
             'conversation': data
         });
-        console.log(response);
     } catch(err) {
         console.log('Error while sending data',err);
     }
-    res.render('threadStats.ejs',{'data':response});
+    data = response.data
+
+    let dict_key = {};
+
+    for(var i=0, c=data['sent messages'].length;i<c;i++){
+        let message = data['sent messages'][i];
+        if(dict_key[message[0]]){
+            message[0] = dict_key[message[0]];
+        } else{
+            dict_key[message[0]] = (await apiDict[req.session.user].getUserInfo(message[0]))[message[0]].name;
+            message[0] = dict_key[message[0]];
+        }
+        data['sent messages'][i] = message;
+    }
+
+
+    for(var i=0, c=data['received reactions'].length;i<c;i++){
+        let message = data['received reactions'][i];
+        if(dict_key[message[0]]){
+            message[0] = dict_key[message[0]];
+        } else{
+            dict_key[message[0]] = (await apiDict[req.session.user].getUserInfo(message[0]))[message[0]].name;
+            message[0] = dict_key[message[0]];
+        }
+        data['received reactions'][i] = message;
+    }
+
+
+    for(var i=0, c=data['graph_data'].nodes.length;i<c;i++){
+        let message = data['graph_data'].nodes[i];
+        if(dict_key[message['id']]){
+            message['label'] = dict_key[message['id']];
+        } else{
+            let name = await apiDict[req.session.user].getUserInfo(message['id']);
+            dict_key[message['id']] = name[message['id']].name;
+            message['label'] = dict_key[message['id']];
+        }
+        data['graph_data'].nodes[i] = message;
+    }
+
+    for(var i=0, c=data['given reactions'].length;i<c;i++){
+        let message = data['given reactions'][i];
+        if(dict_key[message[0]]){
+            message[0] = dict_key[message[0]];
+        } else{
+            dict_key[message[0]] = (await apiDict[req.session.user].getUserInfo(message[0]))[message[0]].name;
+            message[0] = dict_key[message[0]];
+        }
+        data['given reactions'][i] = message;
+    }
+
+    res.render('threadStats.ejs',{'graph_data':data['graph_data'],'sent_messages':data['sent messages'],'given_reactions':data['given_reaction'],'received_reactions':data['received reactions']});
 });
 
 async function loginFunction(email,password){

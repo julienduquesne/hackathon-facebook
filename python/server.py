@@ -48,7 +48,7 @@ def output_metrics(input_conv):
         for i in range(len(friends)):
             edges.append({'from': user, 'to': friends[i][0],
                           'value': friends[i][1]})
-    output["graph_data"] = {'nodes': nodes, 'edges': edges}
+    output['graph_data'] = {'nodes': nodes, 'edges': edges}
     return json.dumps(output)
 
 
