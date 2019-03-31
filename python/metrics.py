@@ -56,7 +56,12 @@ def filter_image(message_list):
     for m in message_list:
         attachments = m.attachments
         if attachments != []:
-            res.append(m)
+            images_attachements = []
+            for a in attachments:
+                if a["type"] == "photo":
+                    images_attachements.append(a)
+        m.attachments = images_attachements
+        res.append(m)
     return res
 
 def get_words_for_cloud(message_list):
@@ -87,11 +92,11 @@ def correct_word(word):
 def message_leaderboard(message_list, flag='all'):
     if flag=='all':
         l = sorted(message_list, key=lambda m: len(m.reactions), reverse=True)
-        res = [{"author": m.author, "reactions":m.reactions, "body": m.body, "timestamp": m.timestamp} for m in l]
+        res = [{"author": m.author, "reactions":m.reactions, "body": m.body, "timestamp": m.timestamp, "attachements":m.attachments} for m in l]
         return res
     elif flag=='images':
         l = sorted(filter_image(message_list), key=lambda m: len(m.reactions), reverse=True)
-        res = [{"author": m.author, "reactions":m.reactions, "body": m.body, "timestamp": m.timestamp} for m in l]
+        res = [{"author": m.author, "reactions":m.reactions, "body": m.body, "timestamp": m.timestamp, "attachements":m.attachments} for m in l]
         return res
 
 
