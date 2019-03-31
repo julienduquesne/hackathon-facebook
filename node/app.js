@@ -125,8 +125,40 @@ app.post('/stats-messages',async (req,res)=>{
         console.log('Error while sending data',err);
     }
     data = response.data
+    let dict_key = {};
+    for(var i=0, c=data['all'].length;i<c;i++){
+        let message = data['all'][i];
+        if(dict_key[message['author']]){
+            message['author'] = dict_key[message['author']];
+        } else{
+            dict_key[message['author']] = (await apiDict[req.session.user].getUserInfo(message['author']))[message['author']].name;
+            message['author'] = dict_key[message['author']];
+        }
+        data['all'][i] = message;
+    }
+    for(var i=0, c=data['images'].length;i<c;i++){
+        let message = data['images'][i];
+        if(dict_key[message['author']]){
+            message['author'] = dict_key[message['author']];
+        } else{
+            dict_key[message['author']] = (await apiDict[req.session.user].getUserInfo(message['author']))[message['author']].name;
+            message['author'] = dict_key[message['author']];
+        }
+        data['images'][i] = message;
+    }
+    for(var i=0, c=data['best_images'].length;i<c;i++){
+        let message = data['best_images'][i];
+        if(dict_key[message['author']]){
+            message['author'] = dict_key[message['author']];
+        } else{
+            dict_key[message['author']] = (await apiDict[req.session.user].getUserInfo(message['author']))[message['author']].name;
+            message['author'] = dict_key[message['author']];
+        }
+        data['best_images'][i] = message;
+    }
+
     console.log(data);
-    res.render('threadMessagesStats.ejs',{'data':data,'all':data['all'],'images':data['images']});
+    res.render('threadMessagesStats.ejs',{'data':data,'all':data['all'],'images':data['images'],'best_images':data['best_images']});
 });
 
 
