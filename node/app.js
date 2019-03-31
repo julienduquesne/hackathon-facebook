@@ -112,7 +112,7 @@ app.post('/stats',async (req,res)=>{
         data['given reactions'][i] = message;
     }
 
-    res.render('threadStats.ejs',{'graph_data':data['graph_data'],'sent_messages':data['sent messages'],'given_reactions':data['given_reaction'],'received_reactions':data['received reactions']});
+    res.render('threadStats.ejs',{'graph_data':data['graph_data'],'sent_messages':data['sent messages'],'given_reactions':data['given reactions'],'received_reactions':data['received reactions']});
 });
 
 async function loginFunction(email,password){

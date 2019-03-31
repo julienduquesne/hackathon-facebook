@@ -15,11 +15,17 @@
   </head>
 
   <body onload='draw()'>
-    <h3 class="mt-5">Bar Chart</h3>
-    <canvas id="barChart" width="100%" height="40"></canvas>
+    <h3 class="mt-5">Graph</h3>
+    <div id="mynetwork" style="height:500px"></div>
 
-    <h3 class="mt-5">Network</h3>
-    <div id="mynetwork" style="height:300px"></div>
+    <h3 class="mt-5">Message sent leaderboard</h3>
+    <canvas id="barChartMessageSent" width="100%" height="40"></canvas>
+
+    <h3 class="mt-5">Reactions given leaderboard</h3>
+    <canvas id="barChartReactionsGiven" width="100%" height="40"></canvas>
+
+    <h3 class="mt-5">Reactions received leaderboard</h3>
+    <canvas id="barChartReactionsReceived" width="100%" height="40"></canvas>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -27,17 +33,17 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="js/sigma.min.js"></script>
     <script type="text/javascript">
-      var ctx = document.getElementById('barChart').getContext('2d');
+      var ctx = document.getElementById('barChartMessageSent').getContext('2d');
 
       var myBarChart = new Chart(ctx, {
           type: 'horizontalBar',
           data: {
-            labels: ['A', 'B', 'C', 'D', 'E'],
+            labels: [<% sent_messages.forEach(people => { %>'<%- people[0] %>',<% }) %>],
             datasets: [{
                 label: 'Messages',
                 backgroundColor: 'rgb(52, 58, 64)',
                 borderColor: 'rgb(52, 58, 64)',
-                data: [2, 10, 6, 12, 4]
+                data: [<% sent_messages.forEach(people => { %>'<%- people[1] %>',<% }) %>]
             }]
           },
           options: {
@@ -51,6 +57,58 @@
             }
           }
       });
+    </script>
+    <script type="text/javascript">
+        var ctx = document.getElementById('barChartReactionsGiven').getContext('2d');
+    
+        var myBarChart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: [<% given_reactions.forEach(people => { %>'<%- people[0] %>',<% }) %>],
+                datasets: [{
+                    label: 'Reactions',
+                    backgroundColor: 'rgb(52, 58, 64)',
+                    borderColor: 'rgb(52, 58, 64)',
+                    data: [<% given_reactions.forEach(people => { %>'<%- people[1] %>',<% }) %>]
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
+        });
+        </script>
+    <script type="text/javascript">
+    var ctx = document.getElementById('barChartReactionsReceived').getContext('2d');
+
+    var myBarChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: [<% received_reactions.forEach(people => { %>'<%- people[0] %>',<% }) %>],
+            datasets: [{
+                label: 'Reactions',
+                backgroundColor: 'rgb(52, 58, 64)',
+                borderColor: 'rgb(52, 58, 64)',
+                data: [<% received_reactions.forEach(people => { %>'<%- people[1] %>',<% }) %>]
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+        }
+    });
     </script>
 
     <script src="js/vis.js"></script>
@@ -84,7 +142,11 @@
                   return value/total;
                 },
                 min:5,
-                max:150
+                max:50,
+                // label: {
+                //     min:8,
+                //     max:20,
+                // }
               }
             }
           };
