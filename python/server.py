@@ -77,7 +77,7 @@ def output_metrics(input_conv, metric_type='users'):
     return json.dumps(output)
 
 
-def scale_node_values(list_nodes, min_scale=5, max_scale=50):
+def scale_node_values(list_nodes, min_scale=2, max_scale=20):
     nodes = list_nodes
     values = np.array([node['value'] for node in nodes])
     min_v = min(values)
