@@ -61,8 +61,9 @@ def filter_image(message_list):
                 if a["type"] == "photo":
                     images_attachements.append(a)
             m.attachments = images_attachements
-        res.append(m)
+            res.append(m)
     return res
+
 
 def get_words_for_cloud(message_list, n_words=30):
     msgs = [m.body for m in message_list]
@@ -105,6 +106,7 @@ def correct_word(word):
     if word[-1] in punctuation:
         word.pop()
     return word
+
 
 def message_leaderboard(message_list, flag='all'):
     if flag=='all':
