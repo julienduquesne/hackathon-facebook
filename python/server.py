@@ -1,7 +1,4 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from os import curdir
-import os
-import requests
 from json_parser import *
 from metrics import *
 import json
