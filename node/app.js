@@ -37,7 +37,7 @@ app.get('/',async (req,res)=>{
         threadList = await apiDict[req.session.user].getThreadList();
         res.render('index',{'user':req.session.user,'listThread':threadList});
     } else{
-        res.render('index');
+        res.render('login');
     }
 });
 
