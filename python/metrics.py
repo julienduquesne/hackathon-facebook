@@ -76,7 +76,7 @@ def get_words_for_cloud(message_list, n_words=30):
     scale = max_c - min_c
     final_output = []
     for key, value in dic_words.items():
-        final_output.append({'text': word, 'size': (dic_words[key] - min_c) * (90./scale) + 10})
+        final_output.append({'text': key, 'size': (value - min_c) * (90./scale) + 10})
     final_output.sort(key= lambda t: t['size'], reverse=True)
     n_words = min(30, len(final_output))
     return final_output[:n_words]
@@ -87,10 +87,11 @@ def count_words(msg_txt):
     good_words = [correct_word(word) for word in words]
     counts = {}
     for word in good_words:
-        if word in counts:
-            counts[word] += 1
-        else:
-            counts[word] = 1
+        if len(word)>3:
+            if word in counts:
+                counts[word] += 1
+            else:
+                counts[word] = 1
     return counts
 
 
