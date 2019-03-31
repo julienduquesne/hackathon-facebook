@@ -59,7 +59,7 @@ def output_metrics(input_conv):
     return json.dumps(output)
 
 
-def scale_node_values(list_nodes, min=5, max=150):
+def scale_node_values(list_nodes, min_scale=5, max_scale=150):
     nodes = list_nodes
     values = np.array([node['value'] for node in nodes])
     min_v = min(values)
@@ -67,7 +67,7 @@ def scale_node_values(list_nodes, min=5, max=150):
     scale = max_v - min_v
     scaled_values = values - min_v
     scaled_values = scaled_values / scale
-    scaled_values = max * scaled_values + min
+    scaled_values = max_scale * scaled_values + min_scale
     for i, node in enumerate(nodes):
         node['value'] = scaled_values[i]
     return list_nodes
