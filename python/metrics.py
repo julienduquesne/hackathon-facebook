@@ -87,7 +87,7 @@ def count_words(msg_txt):
     good_words = [correct_word(word) for word in words]
     counts = {}
     for word in good_words:
-        if len(word)>3:
+        if len(word)>4:
             if word in counts:
                 counts[word] += 1
             else:
