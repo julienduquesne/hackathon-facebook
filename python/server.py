@@ -65,11 +65,13 @@ def output_metrics(input_conv, metric_type='users'):
         best_images_mess = output['images'][:min(3, len(output['images']))]
         cpt, best_images = 0, []
         for m in best_images_mess:
-            if cpt < nb_images:
                 for image in m["attachements"]:
-                    best_images.append({'ID':image['ID'], 'author':m['author'], 'reactions': m['reactions'],
-                                        'body': m['body'], 'timestamp': m['timestamp'], 'url':image['url']})
-                    cpt += 1
+                    if cpt < nb_images:
+                        best_images.append({'ID':image['ID'], 'author':m['author'], 'reactions': m['reactions'],
+                                            'body': m['body'], 'timestamp': m['timestamp'], 'url':image['url']})
+                        cpt += 1
+                    else:
+                        break
         output["best_images"] = best_images
         output["words_cloud_input"] = get_words_for_cloud(message_list)
     else:
