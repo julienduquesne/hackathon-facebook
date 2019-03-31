@@ -10,6 +10,7 @@ import numpy as np
 url_for_node = "http://localhost:3000/output_python"
 
 wanted_features = ['received reactions', 'given reactions', 'sent messages']
+messages_flags = ['all', 'images']
 store_path = '/raw_conversation'
 
 # HTTPRequestHandler class
@@ -41,6 +42,9 @@ def output_metrics(input_conv):
     for feature in wanted_features:
         output[feature] = user_leaderboard(message_list, key=feature)
 
+    for flag in messages_flags:
+        output[flag] = message_leaderboard(message_list, flag=flag)
+
     nodes = [{'id': user, 'value': value, 'label': 'fill name', 'scaling.label': True}
              for (user, value) in output['sent messages']]
     nodes = scale_node_values(nodes)
@@ -53,6 +57,7 @@ def output_metrics(input_conv):
                               'value': friends[i][1]})
     output["graph_data"] = {'nodes': nodes, 'edges': edges}
     return json.dumps(output)
+
 
 def scale_node_values(list_nodes, min=5, max=150):
     nodes = list_nodes
