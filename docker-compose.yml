@@ -18,5 +18,3 @@ services:
     command: python -u server.py
     volumes:
       - ./python:/var/app
-    ports:
-      - "8081:8081"
