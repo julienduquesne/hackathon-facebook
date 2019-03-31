@@ -68,10 +68,11 @@ def output_metrics(input_conv):
                 edges.append({'from': user, 'to': friends[i][0],
                               'value': friends[i][1]})
     output["graph_data"] = {'nodes': nodes, 'edges': edges}
+    output["words_cloud_input"] = get_words_for_cloud(message_list)
     return json.dumps(output)
 
 
-def scale_node_values(list_nodes, min_scale=5, max_scale=150):
+def scale_node_values(list_nodes, min_scale=5, max_scale=50):
     nodes = list_nodes
     values = np.array([node['value'] for node in nodes])
     min_v = min(values)
