@@ -11,6 +11,7 @@ url_for_node = "http://node:3000/output_python"
 
 wanted_features = ['received reactions', 'given reactions', 'sent messages']
 messages_flags = ['all', 'images']
+nb_images = 3
 store_path = '/raw_conversation'
 
 # HTTPRequestHandler class
@@ -43,7 +44,17 @@ def output_metrics(input_conv):
         output[feature] = user_leaderboard(message_list, key=feature)
 
     for flag in messages_flags:
-        output[flag] = message_leaderboard(message_list, flag=flag)
+        l = message_leaderboard(message_list, flag=flag)
+        output[flag] = l
+    best_attachements_mess = l[:min(3, len(l))]
+    cpt, best_images = 0, []
+    for m in best_attachements:
+        if cpt < nb_images
+        for image in m["attachements"]:
+            best_images.append({'ID':image['ID'], 'author':m['author'], 'reactions': m['reactions'],
+                                'timestamp': m['timestamp'], 'url':image['url']})
+            cpt += 1
+    output["best_images"] = best_images
 
     nodes = [{'id': user, 'value': value, 'label': 'fill name', 'scaling.label': True}
              for (user, value) in output['sent messages']]
