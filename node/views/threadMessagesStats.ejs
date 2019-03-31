@@ -38,8 +38,17 @@
     <h3 class="mt-5">Best messages by number of reactions</h3>
     <canvas id="barChartAllMessages" width="100%" height="20"></canvas>
 
-    <h3 class="mt-5">Most popular sender</h3>
-    <canvas id="barChartReactionsReceived" width="100%" height="20"></canvas>
+    <h3 class="mt-5">Best images</h3>
+
+    <div class='d-flex justify-content-center mt-3'>
+        <% best_images.forEach((image)=>{%>
+            <div class='m-5'>
+                <img src="<%= image.url %>" class='best-img'>
+                <p class='text-center'><%= image.author %></p>
+            </div>
+        <%});%>
+    </div>
+    
     </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -86,7 +95,7 @@
           type: 'horizontalBar',
           data: {
               labels: [
-              <% all.slice(0,10).forEach(message => { %>'<%- message["author"] %>',<% }) %>
+              <% all.slice(0,10).forEach(message => { %>'<%- message["body"]["body"] %>',<% }) %>
               ],
               datasets: [{
                   label: 'Reactions',
@@ -110,33 +119,5 @@
       });
       </script>
     }
-    <script type="text/javascript">
-    var ctx = document.getElementById('barChartReactionsReceived').getContext('2d');
-
-    var myBarChart = new Chart(ctx, {
-        type: 'horizontalBar',
-        data: {
-            labels: [
-            ],
-            datasets: [{
-                label: 'Reactions',
-                backgroundColor: '#3b5998',
-                borderColor: '#3b5998',
-                data: [
-                ]
-            }]
-        },
-        options: {
-            scales: {
-                xAxes: [{
-                    stacked: true
-                }],
-                yAxes: [{
-                    stacked: true
-                }]
-            }
-        }
-    });
-    </script>
 
   </body>
