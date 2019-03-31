@@ -25,6 +25,7 @@ app.use(cookieSession({
     keys: ['key1','key2'],
 }));
 
+
 app.get('/start',(req,res)=>{
     if(req.session.user){
         req.session.user = undefined;
@@ -156,7 +157,6 @@ app.post('/stats-messages',async (req,res)=>{
         }
         data['best_images'][i] = message;
     }
-
     console.log(data);
     res.render('threadMessagesStats.ejs',{'data':data,'all':data['all'],'images':data['images'],'best_images':data['best_images']});
 });
