@@ -51,10 +51,24 @@ def user_leaderboard(message_list, key='received reactions'):
         pass
 
 
-def message_leaderboard(message_list):
-    l = sorted(message_list, key=lambda m: len(m.reactions), reverse=True)
-    res = [{"author": m.author, "reactions":m.reactions, "body": m.body, "timestamp": m.timestamp} for m in l]
+def filter_image(message_list):
+    res = []
+    for m in message_list:
+        attachments = m.attachments
+        if attachments != []:
+            res.append(m)
     return res
+
+
+def message_leaderboard(message_list, flag='all'):
+    if flag=='all':
+        l = sorted(message_list, key=lambda m: len(m.reactions), reverse=True)
+        res = [{"author": m.author, "reactions":m.reactions, "body": m.body, "timestamp": m.timestamp} for m in l]
+        return res
+    elif flag=='images':
+        l = sorted(filter_image(message_list), key=lambda m: len(m.reactions), reverse=True)
+        res = [{"author": m.author, "reactions":m.reactions, "body": m.body, "timestamp": m.timestamp} for m in l]
+        return res
 
 
 def user_index(message_list):

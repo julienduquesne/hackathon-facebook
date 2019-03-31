@@ -24,7 +24,7 @@ def parse_conversation_from_file(path):
 
 def parse_message(m):
     message = Message(author=m["senderID"], body=m["body"],
-                      timestamp=m["timestamp"], reactions=m["messageReactions"])
+                      timestamp=m["timestamp"], reactions=m["messageReactions"], attachments=m["attachments"])
     return message
 
 
