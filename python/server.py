@@ -36,7 +36,7 @@ class TestHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             output_python = output_metrics(input_conv, metric_type='users')
         elif self.path == store_path_to_messages:
             # call python computations
-            output_python = output_metrics(input_conv)
+            output_python = output_metrics(input_conv, metric_type='messages')
             self._set_response(output_python)
 
 
