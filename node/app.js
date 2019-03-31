@@ -53,15 +53,16 @@ app.get('/deconnect',(req,res)=>{
 
 app.post('/stats',async (req,res)=>{
     data = await apiDict[req.session.user].getWholeThreadHistory(req.body.threadId);
-    console.log(data);
+    let response;
     try{
-        await axios.post('http://localhost:8081/raw_conversation',{
-            conversation: data
+        response = await axios.post('http://localhost:8081/raw_conversation',{
+            'conversation': data
         });
+        console.log(response);
     } catch(err) {
         console.log('Error while sending data',err);
     }
-    res.redirect('/');
+    res.render('threadStats.ejs',{'data':response});
 });
 
 async function loginFunction(email,password){
@@ -86,8 +87,3 @@ app.post('/login',async (request,response)=>{
     }
     response.redirect('/');
 });
-
-app.post('/output_python',(req,res)=>{
-    console.log('received');
-    console.log(req.body.data);
-})
