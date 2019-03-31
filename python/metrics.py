@@ -52,7 +52,9 @@ def user_leaderboard(message_list, key='received reactions'):
 
 
 def message_leaderboard(message_list):
-    return sorted(message_list, key=lambda m: len(m.reactions), reverse=True)
+    l = sorted(message_list, key=lambda m: len(m.reactions), reverse=True)
+    res = [{"author": m.author, "reactions":m.reactions, "body": m.body, "timestamp": m.timestamp} for m in l]
+    return res
 
 
 def user_index(message_list):

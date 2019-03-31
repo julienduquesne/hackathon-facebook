@@ -46,9 +46,10 @@ def output_metrics(input_conv):
     edges = []
     for user, friends in filtered_adjacency_dic.items():
         for i in range(len(friends)):
-            edges.append({'from': user, 'to': friends[i][0],
-                          'value': friends[i][1]})
-    output['graph_data'] = {'nodes': nodes, 'edges': edges}
+            if {'from': friends[i][0], 'to': user, 'value': friends[i][1]} not in edges:
+                edges.append({'from': user, 'to': friends[i][0],
+                              'value': friends[i][1]})
+    output["graph_data"] = {'nodes': nodes, 'edges': edges}
     return json.dumps(output)
 
 
