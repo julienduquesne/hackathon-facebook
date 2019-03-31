@@ -60,7 +60,7 @@ def filter_image(message_list):
             for a in attachments:
                 if a["type"] == "photo":
                     images_attachements.append(a)
-        m.attachments = images_attachements
+            m.attachments = images_attachements
         res.append(m)
     return res
 
