@@ -49,7 +49,7 @@ def output_metrics(input_conv, metric_type='users'):
         nodes = [{'id': user, 'value': value, 'label': 'fill name', 'scaling.label': True}
                  for (user, value) in output['sent messages']]
         nodes = scale_node_values(nodes)
-        filtered_adjacency_dic = filter_sym_dict(sym_adjacency_dict(message_list))
+        filtered_adjacency_dic = filter_sym_dict(sym_adjacency_dict(message_list), nb=2)
         edges = []
         for user, friends in filtered_adjacency_dic.items():
             for i in range(len(friends)):
@@ -65,11 +65,13 @@ def output_metrics(input_conv, metric_type='users'):
         best_images_mess = output['images'][:min(3, len(output['images']))]
         cpt, best_images = 0, []
         for m in best_images_mess:
-            if cpt < nb_images:
                 for image in m["attachements"]:
-                    best_images.append({'ID':image['ID'], 'author':m['author'], 'reactions': m['reactions'],
-                                        'body': m['body'], 'timestamp': m['timestamp'], 'url':image['url']})
-                    cpt += 1
+                    if cpt < nb_images:
+                        best_images.append({'ID':image['ID'], 'author':m['author'], 'reactions': m['reactions'],
+                                            'body': m['body'], 'timestamp': m['timestamp'], 'url':image['url']})
+                        cpt += 1
+                    else:
+                        break
         output["best_images"] = best_images
         output["words_cloud_input"] = get_words_for_cloud(message_list)
     else:
@@ -77,7 +79,7 @@ def output_metrics(input_conv, metric_type='users'):
     return json.dumps(output)
 
 
-def scale_node_values(list_nodes, min_scale=5, max_scale=50):
+def scale_node_values(list_nodes, min_scale=2, max_scale=20):
     nodes = list_nodes
     values = np.array([node['value'] for node in nodes])
     min_v = min(values)
