@@ -101,10 +101,10 @@ def count_words(msg_txt):
 def correct_word(word):
     punctuation = ['.', ',', '!', '?', '(', ')', ':', ';']
     if word[0] in punctuation:
-        word.pop(0)
+        word[1:]
     if word[-1] in punctuation:
-        word.pop()
-    return word
+        word[:-1]
+    return word.lower()
 
 def message_leaderboard(message_list, flag='all'):
     if flag=='all':
