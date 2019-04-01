@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Messenger Stats</title>
+
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <!-- <link href="{% static 'css/blog.css' %}" rel="stylesheet"> -->
+    <!-- <link href="{% static 'css/dist.min.css' %}" rel="stylesheet"> -->
+    <link href="css/dist.min.css" rel="stylesheet">
+    <link href="css/blog.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container">
+      <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-center align-items-center">
+          <div class="col-4 text-center">
+            <a class="blog-header-logo text-dark" href="#">
+              <h1>
+                  Messenger Stats
+              </h1>
+            </a>
+          </div>
+        </div>
+      </header>
+
+    <% if (locals.user) {%>
+      <p class='d-inline-block mr-3 mt-5'>Welcome <%= locals.user %>!</p>
+      <form class='d-inline-block' action='/deconnect' method='GET'>
+        <button class='btn-blue btn'> Sign out</button>
+      </form>
+    <%}
+    else{
+      %>
+      <h3 class="mt-5">Login</h1>
+        <form class="form-inline" method='POST' action='/login'>
+          <div class="form-group mb-2">
+            <label for="staticEmail2" class="sr-only">Email</label>
+            <input name='email' type="text" class="form-control" id="staticEmail2" placeholder="email@example.com">
+          </div>
+          <div class="form-group mx-sm-3 mb-2">
+            <label for="inputPassword2" class="sr-only">Password</label>
+            <input name='password' type="password" class="form-control" id="inputPassword2" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary mb-2">Confirm identity</button>
+        </form>
+      <%
+    } %>
+
+    <% if(locals.listThread){ %>
+    <h3 class="mt-5">Thread List</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Thread Name</th>
+          <th scope="col">Messages</th>
+          <th scope="col">Get users stats</th>
+          <th scope='col'>Get messages stats</th>
+        </tr>
+      </thead>
+      <tbody>
+            <%
+              listThread.forEach(function (thread){
+            %>
+              <tr>
+                <td><%= thread.name %></td>
+                <td><%= thread.messageCount %></td>
+                <td>
+                  <form action="/stats-users" method="POST">
+                    <input hidden type="text" value="<%= thread.threadID %>" name="threadId">
+                    <button type="submit" class="btn btn-blue btn-get-stats" thread-id="0">Get the users stats</button>
+                  </form>
+                </td>
+                <td>
+                    <form action="/stats-messages" method="POST">
+                      <input hidden type="text" value="<%= thread.threadID %>" name="threadId">
+                      <button type="submit" class="btn btn-blue btn-get-stats" thread-id="0">Get the messages stats</button>
+                    </form>
+                </td>
+              </tr>
+            <%
+              });
+              %>
+      </tbody>
+    </table> <%
+  } %>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
